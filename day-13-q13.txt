@@ -1,0 +1,65 @@
+//Problem: You are given a rectangular matrix of integers. Starting from the outer boundary, traverse the matrix in //a clockwise manner and continue moving inward layer by layer until all elements are visited.
+
+//Input:
+//- First line: two integers r and c representing the number of rows and columns
+//- Next r lines: c integers each representing the matrix elements
+
+//Output:
+//- Print all visited elements in the order of traversal, separated by spaces
+
+
+#include <stdio.h>
+
+int main() {
+    int r, c;
+    scanf("%d %d", &r, &c);
+
+    int matrix[r][c];
+
+    for (int k = 0; k < r * c; k++) {
+        int i = k / c;
+        int j = k % c;
+        scanf("%d", &matrix[i][j]);
+    }
+
+    int top = 0, bottom = r - 1;
+    int left = 0, right = c - 1;
+    int i = 0, j = 0;
+    int dir = 0;
+
+    for (int k = 0; k < r * c; k++) {
+        printf("%d ", matrix[i][j]);
+
+        if (dir == 0) { 
+            if (j < right) {
+                j++;
+            } else {
+                dir = 1; top++;
+                i++;
+            }
+        } else if (dir == 1) { 
+            if (i < bottom) {
+                i++;
+            } else {
+                dir = 2; right--;
+                j--;
+            }
+        } else if (dir == 2) { 
+            if (j > left) {
+                j--;
+            } else {
+                dir = 3; bottom--;
+                i--;
+            }
+        } else if (dir == 3) {
+            if (i > top) {
+                i--;
+            } else {
+                dir = 0; left++;
+                j++;
+            }
+        }
+    }
+
+    return 0;
+}
